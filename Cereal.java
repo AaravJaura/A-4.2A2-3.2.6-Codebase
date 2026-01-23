@@ -24,7 +24,7 @@ public class Cereal {
         return sum / cereals.length;
     }
 
-    // compute population standard deviation of nutrients
+    // compute population standard deviation of nutrients- this code snippet was provided by copilot
     public static double stdDevNutrients(Cereal[] cereals) {
         if (cereals == null || cereals.length == 0) return 0.0;
         double mean = meanNutrients(cereals);
@@ -36,6 +36,7 @@ public class Cereal {
         double variance = sumSq / cereals.length; // use (cereals.length - 1) for sample std dev
         return Math.sqrt(variance);
     }
+    //snippet end
 
     public static void main(String[] args) {
         // sample data
@@ -46,10 +47,23 @@ public class Cereal {
             new Cereal("Sugar Puff", "puff", 6, 0.4)
         };
 
-        double mean = meanNutrients(cereals);
-        double stddev = stdDevNutrients(cereals);
+        double targetMean = 9.0;
+        double maxDev = -1.0;
+        Cereal maxCereal = null;
 
-        System.out.println("Mean nutrients: " + mean);
-        System.out.println("Std dev (population): " + stddev);
+        for (Cereal c : cereals) {
+            double dev = Math.abs(c.getNutrients() - targetMean);
+            if (dev > maxDev) {
+                maxDev = dev;
+                maxCereal = c;
+            }
+        }
+
+        if (maxCereal != null) {
+            System.out.println("Cereal farthest from mean " + targetMean + ": " 
+                + maxCereal.name + " (" + maxCereal.getNutrients() + " nutrients, deviation " + maxDev + ")");
+        } else {
+            System.out.println("No cereals to evaluate.");
+        }
     }
 }
